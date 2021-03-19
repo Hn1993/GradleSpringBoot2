@@ -3,6 +3,10 @@ package com.an.gradlespringboot.service;
 
 import com.an.gradlespringboot.entity.User;
 import com.an.gradlespringboot.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -48,4 +52,12 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
+    public Page<User> findUsersByAge(int age,int page,int size){
+        //排序
+        Sort sort = Sort.by(Sort.Direction.ASC, "id");
+        //分页
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        return userRepository.getUserPageByAge(age,pageable);
+    }
 }

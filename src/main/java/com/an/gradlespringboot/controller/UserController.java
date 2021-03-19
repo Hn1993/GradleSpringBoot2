@@ -8,8 +8,10 @@ import com.an.gradlespringboot.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -36,5 +38,20 @@ public class UserController {
         return Result.Error("查找用户失败!");
     }
 
+    /**
+     * 分页请求
+     * @param age
+     * @param page
+     * @param size
+     * @return
+     */
+    @GetMapping(path = "/getUserPage")
+    public Result getUserPage(@RequestParam int age,@RequestParam int page,@RequestParam int size){
+        Page<User> userPage = userService.findUsersByAge(age,page,size);
+        if (userPage != null){
+            return Result.Success("请求成功!",userPage.getContent());
+        }
+        return Result.Error("查找用户失败!");
+    }
 
 }
