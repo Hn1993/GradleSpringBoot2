@@ -21,4 +21,6 @@ public class User {
     private String pwd;
 
     private String token;
+
+    private String head;
 }

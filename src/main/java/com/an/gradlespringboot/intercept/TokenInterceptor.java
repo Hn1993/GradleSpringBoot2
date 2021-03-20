@@ -17,10 +17,10 @@ public class TokenInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String token = request.getHeader("token");
-        System.out.println("preHandle="+token);
+//        System.out.println("preHandle="+token);
         TokenService tokenService = SpringUtil.getBean(TokenService.class); // 在拦截器里  TokenService 还未被加载，所以autowired无效
         if (!StringUtils.isEmpty(token) && tokenService.verifyToken(token)){ //token 验证通过
-            System.out.println("token验证通过!="+token);
+//            System.out.println("token验证通过!="+token);
             return true; //放行
         }
         returnTokenFail(response);
