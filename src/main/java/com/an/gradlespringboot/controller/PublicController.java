@@ -2,12 +2,15 @@ package com.an.gradlespringboot.controller;
 
 
 import com.an.gradlespringboot.entity.Result;
+import com.an.gradlespringboot.entity.Shop;
 import com.an.gradlespringboot.entity.User;
+import com.an.gradlespringboot.service.ShopService;
 import com.an.gradlespringboot.service.TokenService;
 import com.an.gradlespringboot.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,16 +30,24 @@ public class PublicController {
     @Autowired
     private TokenService tokenService;
 
+    @Autowired
+    private ShopService shopService;
+
     @PostMapping(path = "/test")
     public Result publicTest(){
-        return Result.Success("publicTest","ojbk");
+        System.out.println("");
+
+        Shop shop = shopService.getShopByName("1");
+
+        return Result.Success("publicTest", shop);
     }
 
 
     @PostMapping(path = "/testException")
-    public Result publicTestException(){
+    public synchronized Result publicTestException(){
         int i = 1;
 //        i = i / 0;
+        System.out.println("testException");
         return Result.Success("publicTest","ojbk");
     }
 

@@ -23,4 +23,6 @@ public class User {
     private String token;
 
     private String head;
+
+    private String userType;
 }
